@@ -1,3 +1,1 @@
-animalShelter
-animalShelter2
-animalShelter2
+[![Build Status](http://ec2-54-157-224-163.compute-1.amazonaws.com:8080/job/Carlo%20AnimalShelter/badge/icon)](http://ec2-54-157-224-163.compute-1.amazonaws.com:8080/job/Carlo%20AnimalShelter/)
