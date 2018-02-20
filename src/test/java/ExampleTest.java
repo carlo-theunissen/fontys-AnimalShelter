@@ -3,7 +3,7 @@ import org.junit.Test;
 
 public class ExampleTest {
     @Test
-    void FirstTest(){
-        Assert.assertFalse(true);
+    public void FirstTest(){
+        Assert.assertFalse(false);
     }
 }
