@@ -4,29 +4,36 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-public class Cat extends Animal {
+public class Cat extends Animal{
 
-    private Collection<Habit> Habits;
+    private final Collection<Habit> Habits;
 
     public Cat(String name, Gender gender) {
         super(name, gender);
         Habits = Collections.synchronizedList(new ArrayList<Habit>());
     }
 
-
     public Collection<Habit> getHabits() {
         return Collections.unmodifiableCollection(Habits);
     }
 
-    private boolean containsHabit(Habit habit) {
+    public boolean containsHabit(Habit habit) {
         return Habits.contains(habit);
     }
 
-    private void removeHabit(Habit habit) {
-        Habits.remove(habit);
+    public void removeHabit(Habit habit) {
+        synchronized (this) {
+            Habits.remove(habit);
+            setChanged();
+        }
+        notifyObservers();
     }
 
-    private void addHabit(Habit habit) {
-        Habits.add(habit);
+    public void addHabit(Habit habit) {
+        synchronized (this) {
+            Habits.add(habit);
+            setChanged();
+        }
+        notifyObservers();
     }
 }

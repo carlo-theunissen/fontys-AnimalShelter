@@ -1,4 +1,7 @@
 package AnimalShelter.Models;
 
-public class Gender {
+public enum Gender {
+    Male,
+    Female,
+    It
 }

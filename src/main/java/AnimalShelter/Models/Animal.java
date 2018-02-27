@@ -1,6 +1,8 @@
 package AnimalShelter.Models;
 
-public abstract class Animal
+import java.util.Observable;
+
+public abstract class Animal extends Observable
 {
     public Animal(String name, Gender gender) {
         Name = name;
