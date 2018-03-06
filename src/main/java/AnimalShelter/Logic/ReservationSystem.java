@@ -5,19 +5,22 @@ import AnimalShelter.Models.Animal;
 import java.util.*;
 
 public class ReservationSystem extends Observable {
-    private final Set<Animal> animals;
+    private final HashMap<Animal, String> animals;
 
     public ReservationSystem(){
-        animals = new HashSet<Animal>();
+        animals = new HashMap<Animal, String>();
     }
 
     public synchronized boolean isAnimalReserved(Animal animal){
-        return animals.contains(animal);
+        return animals.containsKey(animal);
+    }
+    public synchronized String getReserver(Animal animal){
+        return animals.get(animal);
     }
 
-    public void reserveAnimal(Animal animal){
+    public void reserveAnimal(Animal animal, String reserver){
         synchronized (this) {
-            animals.add(animal);
+            animals.put(animal, reserver);
             setChanged();
         }
         notifyObservers();

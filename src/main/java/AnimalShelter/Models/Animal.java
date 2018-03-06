@@ -27,4 +27,9 @@ public abstract class Animal extends Observable
 
     private String Name;
     private Gender Gender;
+
+    @Override
+    public String toString() {
+        return String.format("%s, %s", getName(), getGender() == Gender.Male ? "Male" : "Female");
+    }
 }

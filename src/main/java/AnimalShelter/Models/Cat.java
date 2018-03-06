@@ -36,4 +36,13 @@ public class Cat extends Animal{
         }
         notifyObservers();
     }
+
+    @Override
+    public String toString() {
+        StringBuilder habits = new StringBuilder();
+        for(Habit habit : getHabits()){
+            habits.append(habit.toString());
+        }
+        return super.toString() + ", " + (getHabits().isEmpty() ? "No bad habits" : habits.toString());
+    }
 }

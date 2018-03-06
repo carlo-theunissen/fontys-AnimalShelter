@@ -18,7 +18,7 @@ public class ReservationSystemTest {
         Cat cat = new Cat("Charley", Gender.It);
         Cat oldCat = new Cat("Felix", Gender.Female);
 
-        system.reserveAnimal(cat);
+        system.reserveAnimal(cat, "Carlo");
 
         Assert.assertTrue(system.isAnimalReserved(cat));
         Assert.assertFalse(system.isAnimalReserved(oldCat));
@@ -31,7 +31,7 @@ public class ReservationSystemTest {
         system.addObserver(observer);
 
         Cat cat = new Cat("Charley", Gender.It);
-        system.reserveAnimal(cat);
+        system.reserveAnimal(cat, "Sjaak");
 
         Assert.assertTrue(observer.Updated);
     }

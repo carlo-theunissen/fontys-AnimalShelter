@@ -10,4 +10,9 @@ public abstract class Habit {
     }
 
     private final String Description;
+
+    @Override
+    public String toString() {
+        return Description;
+    }
 }

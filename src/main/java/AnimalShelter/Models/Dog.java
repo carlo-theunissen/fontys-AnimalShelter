@@ -41,4 +41,9 @@ public class Dog extends Animal {
         super(name, gender);
         walk();
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", last walk: "+ WalkTime;
+    }
 }
