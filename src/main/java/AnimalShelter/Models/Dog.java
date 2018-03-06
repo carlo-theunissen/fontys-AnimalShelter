@@ -1,5 +1,7 @@
 package AnimalShelter.Models;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Dog extends Animal {
@@ -11,24 +13,31 @@ public class Dog extends Animal {
     private volatile Date WalkTime;
 
     public boolean needsWalk(){
-        Date date = new Date();
-        date.setTime(0);
-
         //because WalkTime is partly immortal, we don't need
         //synchronization to prevent race-conditions
-        return WalkTime.before(date);
+        return WalkTime.before(getWalkTime());
 
     }
 
-    public void walk(){
+    private Date getWalkTime(){
         Date date = new Date();
-        date.setTime(0); //setting the time to 0, only the date will remain
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+
+    public void walk(){
+
 
         //synchronization is needed because we're editing two properties
         // - the walk time
         // - that the observable has been changed
         synchronized (this) {
-            WalkTime = (Date) date.clone(); //partly immortal!
+            WalkTime = getWalkTime(); //partly immortal!
             setChanged();
         }
 
@@ -44,6 +53,6 @@ public class Dog extends Animal {
 
     @Override
     public String toString() {
-        return super.toString() + ", last walk: "+ WalkTime;
+        return super.toString() + ", last walk: "+ new SimpleDateFormat("yyyy-MM-dd").format(WalkTime);
     }
 }

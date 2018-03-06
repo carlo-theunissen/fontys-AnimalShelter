@@ -3,12 +3,12 @@ package AnimalShelter.UI;
 import AnimalShelter.Logic.ReservationSystem;
 import AnimalShelter.Models.*;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -22,11 +22,13 @@ public class Startup extends Application{
 
     private ComboBox spiecesBox;
     private TextField nameField;
+    private TextField reserverName;
     private TextField badhabitField;
     private RadioButton maleRadioButton;
     private RadioButton femaleRadioButton;
     private ListView addedAnimals;
     private ReservationSystem reservationSystem;
+    private Button reserveButton;
 
     public Startup(){
         reservationSystem = new ReservationSystem();
@@ -55,11 +57,49 @@ public class Startup extends Application{
 
 
         grid.add(addAnimalButton(),1,5);
-
-
         grid.add(getSelectVBox(), 2,1,3,2);
+        grid.add(reserveVBox(), 2,3,3,1);
         primaryStage.setScene(new Scene(grid, 600, 300));
         primaryStage.show();
+    }
+    private VBox reserveVBox(){
+        VBox box = new VBox();
+        box.getChildren().add(new Text("Reserve Animal"));
+
+        HBox inputs = new HBox();
+        reserverName = new TextField();
+        reserverName.textProperty().addListener(new ChangeListener<String>() {
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                calculateReserveButtonDisable();
+            }
+        });
+        inputs.getChildren().add(new Text("Name: "));
+        inputs.getChildren().add(reserverName);
+
+        reserveButton = new Button("Reserve");
+        reserveButton.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                handleAnimalReservation();
+            }
+        });
+        inputs.getChildren().add(reserveButton);
+        calculateReserveButtonDisable();
+
+        box.getChildren().add(inputs);
+        return box;
+    }
+
+    private void handleAnimalReservation(){
+        for(Object couple : addedAnimals.getSelectionModel().getSelectedItems()){
+            AnimalReservationCouple reservationCouple = (AnimalReservationCouple) couple;
+            if(!reservationSystem.isAnimalReserved(reservationCouple.GetAnimal())) {
+                reservationSystem.reserveAnimal(reservationCouple.GetAnimal(), reserverName.getText());
+            }
+        }
+        addedAnimals.refresh();
+    }
+    private void calculateReserveButtonDisable(){
+        reserveButton.setDisable(reserverName.getText().trim().equals("") || !addedAnimals.getSelectionModel().getSelectedItems().iterator().hasNext());
     }
 
     private Button addAnimalButton(){
@@ -138,6 +178,14 @@ public class Startup extends Application{
     private VBox getSelectVBox(){
         VBox box = new VBox(3);
         addedAnimals.setMinWidth(350);
+
+        addedAnimals.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                calculateReserveButtonDisable();
+            }
+        });
+
+
         box.getChildren().add(new Text("Animals"));
         box.getChildren().add(addedAnimals);
         return box;

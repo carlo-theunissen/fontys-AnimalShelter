@@ -10,9 +10,12 @@ public class AnimalReservationCouple {
         this.system = system;
         this.animal = animal;
     }
+    public Animal GetAnimal(){
+        return animal;
+    }
 
     @Override
     public String toString() {
-        return animal.toString() + (system.isAnimalReserved(animal) ? ", Animal reserved by " + system.getReserver(animal) : ", Animal not reserved ");
+        return animal.toString() + (system.isAnimalReserved(animal) ? ", Animal reserved by: " + system.getReserver(animal) : ", Animal not reserved ");
     }
 }
