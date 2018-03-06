@@ -11,7 +11,7 @@ public class ReservationSystem extends Observable {
         animals = new HashSet<Animal>();
     }
 
-    public boolean isAnimalReserved(Animal animal){
+    public synchronized boolean isAnimalReserved(Animal animal){
         return animals.contains(animal);
     }
 

@@ -18,6 +18,14 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>8.8.3</version>
+                <configuration>
+                    <mainClass>AnimalShelter.UI.Startup</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
                 <!-- Build an executable JAR -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -27,7 +35,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.mycompany.app.App</mainClass>
+                            <mainClass>AnimalShelter.UI.Startup</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

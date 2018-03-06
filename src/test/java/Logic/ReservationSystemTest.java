@@ -25,7 +25,7 @@ public class ReservationSystemTest {
     }
 
     @Test
-    public void ObserverableReservationTest(){
+    public void ObservableReservationTest(){
         ReservationSystem system = new ReservationSystem();
         ObserverHelper observer = new ObserverHelper();
         system.addObserver(observer);
